@@ -20,16 +20,14 @@ export class UsersController {
         let result: IUserSearchResponse;
 
         if (searchParams.email && searchParams.password) {
-            const user = await this.usersService.searchUser({
-                email: searchParams.email,
-            });
+            const user = await this.usersService.searchUserByEmail(searchParams.email);
 
-            if (user && user[0]) {
-                if (await user[0].compareEncryptedPassword(searchParams.password)) {
+            if (user) {
+                if (await user.compareEncryptedPassword(searchParams.password)) {
                     result = {
                         status: HttpStatus.OK,
                         message: 'user_search_by_credentials_success',
-                        user: user[0],
+                        user: user,
                     };
                 } else {
                     result = {
