@@ -3,7 +3,7 @@ export class ConfigService {
 
     constructor() {
         this.envConfig = {
-            port: process.env.USER_SERVICE_PORT,
+            port: process.env.USERS_SERVICE_PORT,
         };
         this.envConfig.baseUri = process.env.BASE_URI;
         this.envConfig.gatewayPort = process.env.API_GATEWAY_PORT;
