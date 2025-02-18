@@ -21,6 +21,10 @@ export class UsersService {
         return this.userModel.findOne({ email }).exec();
     }
 
+    public async searchUserByHandle(handle: string): Promise<IUser | null> {
+        return this.userModel.findOne({ handle }).exec();
+    }
+
     public async updateUserById(
         id: string,
         userParams: {},

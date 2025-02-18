@@ -5,6 +5,8 @@ import { UsersService } from './services/users.service';
 import { IUser } from './interfaces/user.interface';
 import { IUserCreateResponse } from './interfaces/user-create-response.interface';
 import { IUserSearchResponse } from './interfaces/user-search-response.interface';
+import { IUserUpdateResponse } from './interfaces/user-update-response.interface';
+import { IUserUpdate } from './interfaces/user-update.interface';
 
 @Controller('users')
 export class UsersController {
@@ -84,6 +86,36 @@ export class UsersController {
         return result;
     }
 
+    @MessagePattern('user_get_by_handle')
+    public async getUserByHandle(handle: string): Promise<IUserSearchResponse> {
+        let result: IUserSearchResponse;
+
+        if (handle) {
+            const user = await this.usersService.searchUserByHandle(handle);
+            if (user) {
+                result = {
+                    status: HttpStatus.OK,
+                    message: 'user_get_by_handle_success',
+                    user,
+                };
+            } else {
+                result = {
+                    status: HttpStatus.NOT_FOUND,
+                    message: 'user_get_by_handle_not_found',
+                    user: null,
+                };
+            }
+        } else {
+            result = {
+                status: HttpStatus.BAD_REQUEST,
+                message: 'user_get_by_handle_bad_request',
+                user: null,
+            };
+        }
+
+        return result;
+    }
+
     @MessagePattern('user_create')
     public async createUser(userParams: IUser): Promise<IUserCreateResponse> {
         let result: IUserCreateResponse;
@@ -128,6 +160,51 @@ export class UsersController {
             result = {
                 status: HttpStatus.BAD_REQUEST,
                 message: 'user_create_bad_request',
+                user: null,
+                errors: null,
+            };
+        }
+
+        return result;
+    }
+
+    @MessagePattern('user_update')
+    public async updateUser(updateParams: { id: string; updateData: IUserUpdate }): Promise<IUserUpdateResponse> {
+        let result: IUserUpdateResponse;
+
+        if (updateParams && updateParams.id && updateParams.updateData) {
+            // First, check if the user exists
+            const user = await this.usersService.searchUserById(updateParams.id);
+            if (!user) {
+                result = {
+                    status: HttpStatus.NOT_FOUND,
+                    message: 'user_update_not_found',
+                    user: null,
+                    errors: null,
+                };
+            } else {
+                try {
+                    const updatedUser = await this.usersService.updateUserById(updateParams.id, updateParams.updateData);
+
+                    result = {
+                        status: HttpStatus.OK,
+                        message: 'user_update_success',
+                        user: updatedUser,
+                        errors: null,
+                    };
+                } catch (e) {
+                    result = {
+                        status: HttpStatus.PRECONDITION_FAILED,
+                        message: 'user_update_precondition_failed',
+                        user: null,
+                        errors: e.errors,
+                    };
+                }
+            }
+        } else {
+            result = {
+                status: HttpStatus.BAD_REQUEST,
+                message: 'user_update_bad_request',
                 user: null,
                 errors: null,
             };

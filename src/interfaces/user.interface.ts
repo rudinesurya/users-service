@@ -6,4 +6,13 @@ export interface IUser extends Document {
     password: string;
     compareEncryptedPassword: (password: string) => boolean;
     getEncryptedPassword: (password: string) => string;
+
+    // User Profile
+    name?: string;
+    handle?: string;
+    bio?: string;
+    avatarUri?: string;
+
+    // User Settings
+    theme?: string;
 }
