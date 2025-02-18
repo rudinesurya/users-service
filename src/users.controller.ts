@@ -185,7 +185,7 @@ export class UsersController {
             } else {
                 try {
                     const updatedUser = await this.usersService.updateUserById(updateParams.id, updateParams.updateData);
-
+                    
                     result = {
                         status: HttpStatus.OK,
                         message: 'user_update_success',

@@ -13,6 +13,15 @@ export interface IUserSchema extends mongoose.Document {
     password: string;
     comparePassword: (password: string) => Promise<boolean>;
     getEncryptedPassword: (password: string) => Promise<string>;
+
+    // User Profile
+    name?: string;
+    handle?: string;
+    bio?: string;
+    avatarUri?: string;
+
+    // User Settings
+    theme?: string;
 }
 
 export const UserSchema = new mongoose.Schema<IUserSchema>(
@@ -29,6 +38,21 @@ export const UserSchema = new mongoose.Schema<IUserSchema>(
             type: String,
             required: [true, 'Password can not be empty'],
             minlength: [6, 'Password should include at least 6 chars'],
+        },
+        name: {
+            type: String,
+        },
+        handle: {
+            type: String,
+        },
+        bio: {
+            type: String,
+        },
+        avatarUri: {
+            type: String,
+        },
+        theme: {
+            type: String,
         },
     },
     {

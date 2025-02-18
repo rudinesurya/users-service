@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
 import { IUser } from '../interfaces/user.interface';
+import { IUserUpdate } from 'src/interfaces/user-update.interface';
 
 @Injectable()
 export class UsersService {
@@ -27,9 +28,9 @@ export class UsersService {
 
     public async updateUserById(
         id: string,
-        userParams: {},
+        updateData: Partial<IUserUpdate>,
     ): Promise<IUser> {
-        return this.userModel.findOneAndUpdate({ _id: id }, userParams, { new: true }).exec();
+        return this.userModel.findOneAndUpdate({ _id: id }, updateData, { new: true }).exec();
     }
 
     public async createUser(user: IUser): Promise<IUser> {
