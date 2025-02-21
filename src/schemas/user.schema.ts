@@ -18,7 +18,7 @@ export interface IUserSchema extends mongoose.Document {
     name?: string;
     handle?: string;
     bio?: string;
-    avatarUri?: string;
+    avatar_uri?: string;
 
     // User Settings
     theme?: string;
@@ -48,7 +48,7 @@ export const UserSchema = new mongoose.Schema<IUserSchema>(
         bio: {
             type: String,
         },
-        avatarUri: {
+        avatar_uri: {
             type: String,
         },
         theme: {

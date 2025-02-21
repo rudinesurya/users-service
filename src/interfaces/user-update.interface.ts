@@ -3,7 +3,7 @@ export interface IUserUpdate {
     name?: string;
     handle?: string;
     bio?: string;
-    avatarUri?: string;
+    avatar_uri?: string;
 
     // Settings
     theme?: string;
