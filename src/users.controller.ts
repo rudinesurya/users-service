@@ -15,17 +15,14 @@ export class UsersController {
     ) { }
 
     @MessagePattern('user_search_by_credentials')
-    public async searchUserByCredentials(searchParams: {
-        email: string;
-        password: string;
-    }): Promise<IUserSearchResponse> {
+    public async searchUserByCredentials(params: { email: string; password: string; }): Promise<IUserSearchResponse> {
         let result: IUserSearchResponse;
 
-        if (searchParams.email && searchParams.password) {
-            const user = await this.usersService.searchUserByEmail(searchParams.email);
+        if (params && params.email && params.password) {
+            const user = await this.usersService.searchUserByEmail(params.email);
 
             if (user) {
-                if (await user.compareEncryptedPassword(searchParams.password)) {
+                if (await user.compareEncryptedPassword(params.password)) {
                     result = {
                         status: HttpStatus.OK,
                         message: 'user_search_by_credentials_success',
@@ -57,7 +54,7 @@ export class UsersController {
     }
 
     @MessagePattern('user_get_by_id')
-    public async getUserById(id: string): Promise<IUserSearchResponse> {
+    public async getUserById({ id }): Promise<IUserSearchResponse> {
         let result: IUserSearchResponse;
 
         if (id) {
@@ -87,7 +84,7 @@ export class UsersController {
     }
 
     @MessagePattern('user_get_by_handle')
-    public async getUserByHandle(handle: string): Promise<IUserSearchResponse> {
+    public async getUserByHandle({ handle }): Promise<IUserSearchResponse> {
         let result: IUserSearchResponse;
 
         if (handle) {
@@ -117,12 +114,12 @@ export class UsersController {
     }
 
     @MessagePattern('user_create')
-    public async createUser(userParams: IUser): Promise<IUserCreateResponse> {
+    public async createUser(params: { createData: IUser }): Promise<IUserCreateResponse> {
         let result: IUserCreateResponse;
 
-        if (userParams) {
+        if (params && params.createData && params.createData.email) {
             const usersWithEmail = await this.usersService.searchUser({
-                email: userParams.email,
+                email: params.createData.email,
             });
 
             if (usersWithEmail && usersWithEmail.length > 0) {
@@ -139,7 +136,7 @@ export class UsersController {
                 };
             } else {
                 try {
-                    const createdUser = await this.usersService.createUser(userParams);
+                    const createdUser = await this.usersService.createUser(params.createData);
                     delete createdUser.password;
                     result = {
                         status: HttpStatus.CREATED,
@@ -169,12 +166,12 @@ export class UsersController {
     }
 
     @MessagePattern('user_update')
-    public async updateUser(updateParams: { id: string; updateData: IUserUpdate }): Promise<IUserUpdateResponse> {
+    public async updateUser(params: { id: string; updateData: IUserUpdate }): Promise<IUserUpdateResponse> {
         let result: IUserUpdateResponse;
 
-        if (updateParams && updateParams.id && updateParams.updateData) {
+        if (params && params.id && params.updateData) {
             // First, check if the user exists
-            const user = await this.usersService.searchUserById(updateParams.id);
+            const user = await this.usersService.searchUserById(params.id);
             if (!user) {
                 result = {
                     status: HttpStatus.NOT_FOUND,
@@ -184,8 +181,8 @@ export class UsersController {
                 };
             } else {
                 try {
-                    const updatedUser = await this.usersService.updateUserById(updateParams.id, updateParams.updateData);
-                    
+                    const updatedUser = await this.usersService.updateUserById(params.id, params.updateData);
+
                     result = {
                         status: HttpStatus.OK,
                         message: 'user_update_success',

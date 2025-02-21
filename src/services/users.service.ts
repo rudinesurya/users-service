@@ -10,8 +10,8 @@ export class UsersService {
         @InjectModel('User') private readonly userModel: Model<IUser>
     ) { }
 
-    public async searchUser(params: FilterQuery<IUser>): Promise<IUser[]> {
-        return this.userModel.find(params).exec();
+    public async searchUser(query: FilterQuery<IUser>): Promise<IUser[]> {
+        return this.userModel.find(query).exec();
     }
 
     public async searchUserById(id: string): Promise<IUser | null> {
