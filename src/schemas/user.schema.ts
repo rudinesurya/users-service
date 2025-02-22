@@ -4,7 +4,6 @@ import * as bcrypt from 'bcrypt';
 const SALT_ROUNDS = 10;
 
 function transformValue(doc, ret: { [key: string]: any }) {
-    delete ret._id;
     delete ret.password;
 }
 
@@ -57,12 +56,12 @@ export const UserSchema = new mongoose.Schema<IUserSchema>(
     },
     {
         toObject: {
-            virtuals: true,
+            virtuals: false,
             versionKey: false,
             transform: transformValue,
         },
         toJSON: {
-            virtuals: true,
+            virtuals: false,
             versionKey: false,
             transform: transformValue,
         },
