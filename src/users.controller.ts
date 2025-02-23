@@ -25,27 +25,27 @@ export class UsersController {
                 if (await user.compareEncryptedPassword(params.password)) {
                     result = {
                         status: HttpStatus.OK,
-                        message: 'user_search_by_credentials_success',
+                        system_message: 'user_search_by_credentials_success',
                         user: user,
                     };
                 } else {
                     result = {
                         status: HttpStatus.NOT_FOUND,
-                        message: 'user_search_by_credentials_not_match',
+                        system_message: 'user_search_by_credentials_not_match',
                         user: null,
                     };
                 }
             } else {
                 result = {
                     status: HttpStatus.NOT_FOUND,
-                    message: 'user_search_by_credentials_not_found',
+                    system_message: 'user_search_by_credentials_not_found',
                     user: null,
                 };
             }
         } else {
             result = {
                 status: HttpStatus.NOT_FOUND,
-                message: 'user_search_by_credentials_not_found',
+                system_message: 'user_search_by_credentials_not_found',
                 user: null,
             };
         }
@@ -62,20 +62,20 @@ export class UsersController {
             if (user) {
                 result = {
                     status: HttpStatus.OK,
-                    message: 'user_get_by_id_success',
+                    system_message: 'user_get_by_id_success',
                     user,
                 };
             } else {
                 result = {
                     status: HttpStatus.NOT_FOUND,
-                    message: 'user_get_by_id_not_found',
+                    system_message: 'user_get_by_id_not_found',
                     user: null,
                 };
             }
         } else {
             result = {
                 status: HttpStatus.BAD_REQUEST,
-                message: 'user_get_by_id_bad_request',
+                system_message: 'user_get_by_id_bad_request',
                 user: null,
             };
         }
@@ -92,20 +92,20 @@ export class UsersController {
             if (user) {
                 result = {
                     status: HttpStatus.OK,
-                    message: 'user_get_by_handle_success',
+                    system_message: 'user_get_by_handle_success',
                     user,
                 };
             } else {
                 result = {
                     status: HttpStatus.NOT_FOUND,
-                    message: 'user_get_by_handle_not_found',
+                    system_message: 'user_get_by_handle_not_found',
                     user: null,
                 };
             }
         } else {
             result = {
                 status: HttpStatus.BAD_REQUEST,
-                message: 'user_get_by_handle_bad_request',
+                system_message: 'user_get_by_handle_bad_request',
                 user: null,
             };
         }
@@ -125,11 +125,11 @@ export class UsersController {
             if (usersWithEmail && usersWithEmail.length > 0) {
                 result = {
                     status: HttpStatus.CONFLICT,
-                    message: 'user_create_conflict',
+                    system_message: 'user_create_conflict',
                     user: null,
                     errors: {
                         email: {
-                            message: 'Email already exists',
+                            system_message: 'Email already exists',
                             path: 'email',
                         },
                     },
@@ -140,14 +140,14 @@ export class UsersController {
                     delete createdUser.password;
                     result = {
                         status: HttpStatus.CREATED,
-                        message: 'user_create_success',
+                        system_message: 'user_create_success',
                         user: createdUser,
                         errors: null,
                     };
                 } catch (e) {
                     result = {
                         status: HttpStatus.PRECONDITION_FAILED,
-                        message: 'user_create_precondition_failed',
+                        system_message: 'user_create_precondition_failed',
                         user: null,
                         errors: e.errors,
                     };
@@ -156,7 +156,7 @@ export class UsersController {
         } else {
             result = {
                 status: HttpStatus.BAD_REQUEST,
-                message: 'user_create_bad_request',
+                system_message: 'user_create_bad_request',
                 user: null,
                 errors: null,
             };
@@ -175,7 +175,7 @@ export class UsersController {
             if (!user) {
                 result = {
                     status: HttpStatus.NOT_FOUND,
-                    message: 'user_update_not_found',
+                    system_message: 'user_update_not_found',
                     user: null,
                     errors: null,
                 };
@@ -185,14 +185,14 @@ export class UsersController {
 
                     result = {
                         status: HttpStatus.OK,
-                        message: 'user_update_success',
+                        system_message: 'user_update_success',
                         user: updatedUser,
                         errors: null,
                     };
                 } catch (e) {
                     result = {
                         status: HttpStatus.PRECONDITION_FAILED,
-                        message: 'user_update_precondition_failed',
+                        system_message: 'user_update_precondition_failed',
                         user: null,
                         errors: e.errors,
                     };
@@ -201,7 +201,7 @@ export class UsersController {
         } else {
             result = {
                 status: HttpStatus.BAD_REQUEST,
-                message: 'user_update_bad_request',
+                system_message: 'user_update_bad_request',
                 user: null,
                 errors: null,
             };
