@@ -27,12 +27,14 @@ export class UsersController {
                         status: HttpStatus.OK,
                         system_message: 'user_search_by_credentials_success',
                         user: user,
+                        errors: null,
                     };
                 } else {
                     result = {
                         status: HttpStatus.NOT_FOUND,
                         system_message: 'user_search_by_credentials_not_match',
                         user: null,
+                        errors: null,
                     };
                 }
             } else {
@@ -40,6 +42,7 @@ export class UsersController {
                     status: HttpStatus.NOT_FOUND,
                     system_message: 'user_search_by_credentials_not_found',
                     user: null,
+                    errors: null,
                 };
             }
         } else {
@@ -47,6 +50,7 @@ export class UsersController {
                 status: HttpStatus.NOT_FOUND,
                 system_message: 'user_search_by_credentials_not_found',
                 user: null,
+                errors: null,
             };
         }
 
@@ -64,12 +68,14 @@ export class UsersController {
                     status: HttpStatus.OK,
                     system_message: 'user_get_by_id_success',
                     user,
+                    errors: null,
                 };
             } else {
                 result = {
                     status: HttpStatus.NOT_FOUND,
                     system_message: 'user_get_by_id_not_found',
                     user: null,
+                    errors: null,
                 };
             }
         } else {
@@ -77,6 +83,7 @@ export class UsersController {
                 status: HttpStatus.BAD_REQUEST,
                 system_message: 'user_get_by_id_bad_request',
                 user: null,
+                errors: null,
             };
         }
 
@@ -94,12 +101,14 @@ export class UsersController {
                     status: HttpStatus.OK,
                     system_message: 'user_get_by_handle_success',
                     user,
+                    errors: null,
                 };
             } else {
                 result = {
                     status: HttpStatus.NOT_FOUND,
                     system_message: 'user_get_by_handle_not_found',
                     user: null,
+                    errors: null,
                 };
             }
         } else {
@@ -107,6 +116,7 @@ export class UsersController {
                 status: HttpStatus.BAD_REQUEST,
                 system_message: 'user_get_by_handle_bad_request',
                 user: null,
+                errors: null,
             };
         }
 
