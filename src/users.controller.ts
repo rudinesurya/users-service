@@ -6,7 +6,7 @@ import { IUserCreateResponse } from './interfaces/user-create-response.interface
 import { IUserSearchResponse } from './interfaces/user-search-response.interface';
 import { IUserUpdateResponse } from './interfaces/user-update-response.interface';
 import { IUserUpdate } from './interfaces/user-update.interface';
-import logger from './services/logger';
+import logger from '@rudinesurya/logger';
 
 @Controller('users')
 export class UsersController {
