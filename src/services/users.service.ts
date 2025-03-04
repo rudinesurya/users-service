@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { IUser, IUserUpdate } from '@rudinesurya/users-service-interfaces';
 import { FilterQuery, Model } from 'mongoose';
-import { IUser } from '../interfaces/user.interface';
-import { IUserUpdate } from 'src/interfaces/user-update.interface';
 
 @Injectable()
 export class UsersService {

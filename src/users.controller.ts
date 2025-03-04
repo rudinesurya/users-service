@@ -1,12 +1,8 @@
 import { Controller, HttpStatus } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { UsersService } from './services/users.service';
-import { IUser } from './interfaces/user.interface';
-import { IUserCreateResponse } from './interfaces/user-create-response.interface';
-import { IUserSearchResponse } from './interfaces/user-search-response.interface';
-import { IUserUpdateResponse } from './interfaces/user-update-response.interface';
-import { IUserUpdate } from './interfaces/user-update.interface';
 import logger from '@rudinesurya/logger';
+import { IUser, IUserCreateResponse, IUserSearchResponse, IUserUpdate, IUserUpdateResponse } from '@rudinesurya/users-service-interfaces';
 
 @Controller('users')
 export class UsersController {
